@@ -1,268 +1,132 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en"><head>
-<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>Lido Staking — ETH Liquid Staking</title>
-<meta content="Lido Staking is a non-custodial ETH Liquid Staking. Open the app and stake ETH from your own wallet." name="description"/>
-<meta content="index,follow,max-image-preview:large" name="robots"/>
-<link href="https://lido-staking-app.github.io/" rel="canonical"/>
-<link href="https://lido-staking-app.github.io/" hreflang="en" rel="alternate"/><link href="https://lido-staking-app.github.io/" hreflang="x-default" rel="alternate"/>
-<meta content="#080C0F" name="theme-color"/>
-<meta content="website" property="og:type"/><meta content="Lido Staking — ETH Liquid Staking" property="og:title"/><meta content="Lido Staking is a non-custodial ETH Liquid Staking. Open the app and stake ETH from your own wallet." property="og:description"/>
-<meta content="https://lido-staking-app.github.io/" property="og:url"/><meta content="https://lido-staking-app.github.io/og-cover.png" property="og:image"/><meta content="en" property="og:locale"/>
-<meta content="summary_large_image" name="twitter:card"/><meta content="Lido Staking — ETH Liquid Staking" name="twitter:title"/><meta content="Lido Staking is a non-custodial ETH Liquid Staking. Open the app and stake ETH from your own wallet." name="twitter:description"/><meta content="https://lido-staking-app.github.io/og-cover.png" name="twitter:image"/>
-<link href="favicon.svg" rel="icon" type="image/svg+xml"/><link href="site.webmanifest" rel="manifest"/><link href="static/icon-180.png" rel="apple-touch-icon"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="static/style.css" rel="stylesheet"/>
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://lido-staking-app.github.io/#website",
-      "url": "https://lido-staking-app.github.io/",
-      "name": "Lido Staking"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://lido-staking-app.github.io/#webpage",
-      "url": "https://lido-staking-app.github.io/",
-      "name": "Lido Staking — ETH Liquid Staking",
-      "description": "Lido Staking is a non-custodial ETH Liquid Staking. Open the app and stake ETH from your own wallet.",
-      "inLanguage": "en",
-      "isPartOf": {
-        "@id": "https://lido-staking-app.github.io/#website"
-      }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://lido-staking-app.github.io/#org",
-      "name": "Lido Staking",
-      "url": "https://lido-staking-app.github.io/",
-      "logo": "https://lido-staking-app.github.io/og-cover.png"
-    },
-    {
-      "@type": "WebApplication",
-      "@id": "https://lido-staking-app.github.io/#app",
-      "name": "Lido Staking",
-      "url": "https://lido-staking-app.github.io/",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Web",
-      "browserRequirements": "Requires JavaScript",
-      "description": "Lido Staking is a non-custodial ETH Liquid Staking. Open the app and stake ETH from your own wallet.",
-      "featureList": [
-        "ETH Liquid Staking",
-        "Stake ETH, keep your custody"
-      ],
-      "isPartOf": {
-        "@id": "https://lido-staking-app.github.io/#website"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://lido-staking-app.github.io/#faq",
-      "inLanguage": "en",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Is lido staking the official Lido app?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. This page is an independent guide to Lido staking, not the official app or a wallet connection page. Use the official Lido website or Lido documentation when you need current routes, contract references or support information."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What do I receive when staking ETH with Lido?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You receive stETH when staking ETH through Lido's core staking route. stETH is a rebasing token that represents ETH staked with Lido and is updated through protocol accounting. Lido's contract documentation describes the staking pool and stETH token behavior."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is the difference between stETH and wstETH?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "stETH is rebasing, so wallet balances can change with oracle reports. wstETH is a wrapped, non-rebasing version whose balance stays static while its value in stETH changes. Lido's wstETH documentation explains why the wrapper is used for many DeFi integrations."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do Lido withdrawals work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Lido withdrawals use a request and claim flow. A user locks stETH or wstETH in a withdrawal request, waits for processing, then claims ETH once finalized. Secondary-market swaps are a separate exit path with market pricing. Lido's withdrawal guide explains the process."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can stETH always be swapped one-for-one for ETH?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Protocol redemption and secondary-market swaps are different. A market trade depends on available liquidity and current pricing, so the execution price can differ from ETH. Lido's withdrawals page notes that stETH can be traded on markets but is not a guaranteed peg."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What risks should I check before using Lido staking?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Check smart-contract risk, validator penalties, governance decisions, oracle assumptions, withdrawal timing, stETH market pricing, wallet approvals and phishing. Lido's help center lists major staking risks, while Ethereum.org explains base withdrawal mechanics."
-          }
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lido Staking App</title>
+  <meta name="description" content="Lido Staking App lets you stake ETH and receive stETH from your own wallet while keeping the final transaction inside the app.">
+  <link rel="canonical" href="https://lido-staking-app.github.io/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#F7FAFD">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lido Staking App">
+  <meta property="og:description" content="Lido Staking App lets you stake ETH and receive stETH from your own wallet while keeping the final transaction inside the app.">
+  <meta property="og:url" content="https://lido-staking-app.github.io/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lido Staking App">
+  <meta name="twitter:description" content="Lido Staking App lets you stake ETH and receive stETH from your own wallet while keeping the final transaction inside the app.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://lido-staking-app.github.io/#website",
+        "url": "https://lido-staking-app.github.io/",
+        "name": "Lido Staking App",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://lido-staking-app.github.io/#organization",
+        "name": "Lido",
+        "url": "https://lido.fi/",
+        "sameAs": [
+          "https://lido.fi/",
+          "https://docs.lido.fi/",
+          "https://x.com/LidoFinance",
+          "https://github.com/lidofinance"
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://lido-staking-app.github.io/#app",
+        "name": "Lido Staking App",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "url": "https://lido-staking-app.github.io/",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         }
-      ]
-    }
-  ]
-}</script></head>
+      }
+    ]
+  }
+  </script>
+</head>
 <body>
-<header class="site-header">
-<a aria-label="Lido Staking" class="brand" href="#top">
-<svg aria-hidden="true" class="brand-mark" viewbox="0 0 32 32"><defs><lineargradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#BADFFA"></stop><stop offset=".5" stop-color="#66B5EE"></stop><stop offset="1" stop-color="#1781CC"></stop></lineargradient></defs><g fill="none" stroke="url(#g)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"><circle cx="13" cy="13" r="6.2"></circle><circle cx="20" cy="20" r="6.2"></circle></g></svg>
-<h1>Lido Staking</h1>
-</a>
-<nav aria-label="Primary" class="site-nav"><ul class="nav-list"><li><a href="#how-it-works">How it works</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#fees-security">Fees security</a></li><li><a href="#core-pieces">Core pieces</a></li><li><a href="#checks">Checks</a></li><li><a href="#faq">FAQ</a></li></ul></nav>
-<span class="header-spacer"></span>
-<a class="cta cta-primary header-cta" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open Lido Staking</a>
-<button aria-expanded="false" aria-label="Menu" class="nav-toggle"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
-</header>
-<main id="top">
-<section class="hero"><div class="container"><div class="hero-grid">
-<div class="hero-copy">
-<h2 class="hero-title">Stake ETH, keep your custody</h2>
-<p class="lead"><strong>Lido Staking</strong> — Stake ETH through Lido with a clear view of stETH, wstETH, withdrawal routes and protocol risk.</p>
-<div class="hero-cta-row"><a class="cta cta-primary" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open Lido Staking ↗</a><a class="cta cta-secondary" href="#what-is">Learn more</a></div>
-<p class="hero-note">Live preview — open Lido Staking to stake.</p><div class="trust-row"><span class="trust-chip">On-chain</span><span class="trust-chip">Non-custodial</span></div>
-</div>
-<div class="hero-widget">
-<div aria-hidden="true" class="floating-coins"></div>
-<div class="swap-widget" id="app-widget">
-<div class="swap-widget-head"><span>Stake</span><span class="badge">Staking</span></div>
-<div class="swap-row"><div class="swap-col"><span class="swap-label">From</span><span class="swap-amount">1.00</span></div><span class="token-chip" data-slot="from"><span class="token-icon-morph"><img alt="ETH" class="" decoding="async" height="28" loading="lazy" src="eth.png" width="28"/></span><span class="token-ticker">ETH</span></span></div>
-<div class="swap-flip-wrap"><button aria-label="Switch" class="swap-flip" type="button"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 4l3 3M17 20V4M17 4l3 3M17 20l-3-3"></path></svg></button></div>
-<div class="swap-row"><div class="swap-col"><span class="swap-label">To</span><span class="swap-amount">~1.00</span></div><span class="token-chip" data-slot="to"><span class="token-icon-morph"><img alt="stETH" class="" decoding="async" height="28" loading="lazy" src="steth.png" width="28"/></span><span class="token-ticker">stETH</span></span></div>
-<a class="cta cta-primary swap-now-main" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open Lido Staking ↗</a>
-<p class="swap-note">Preview — open Lido Staking to stake.</p>
-</div>
-</div>
-</div></div></section>
-<section class="section section-alt" id="what-is"><div class="container"><h2>What is Lido Staking?</h2><div class="capsule"><p>Lido staking is a liquid staking route for ETH that issues stETH, a token representing ETH staked through the Lido protocol. Instead of running validator infrastructure yourself, you interact with Lido's contracts and receive a transferable token that can be held, wrapped, used in supported DeFi, or withdrawn through protocol processes. The official <a href="https://docs.lido.fi/contracts/lido" rel="noopener noreferrer">Lido contract documentation</a> explains the core staking pool and stETH accounting.</p></div></div></section>
-<section class="section section-alt" id="how-it-works">
-<div class="container"><h2>How Lido Staking works</h2><p class="section-intro">Lido converts a wallet staking action into protocol accounting, validator allocation and liquid token exposure.</p>
-<ol class="steps"><li><strong>Submit ETH</strong><span>A user stakes ETH through Lido's app or a supported integration, then receives stETH according to the protocol's minting logic.</span></li><li><strong>Hold stETH</strong><span>stETH is a rebasing ERC-20 token, so balances can update through Lido oracle reports as protocol accounting changes.</span></li><li><strong>Use or wrap</strong><span>Some DeFi venues prefer wstETH, the non-rebasing wrapper whose balance stays fixed while its stETH value changes.</span></li><li><strong>Exit carefully</strong><span>Users can request protocol withdrawal or trade through secondary markets, each with different liquidity, timing and price behavior.</span></li></ol>
-</div>
-</section>
-<section class="section" id="tokens">
-<div class="container"><h2>stETH and wstETH</h2><p class="section-intro">The main choice after staking is whether to hold the rebasing token or use its wrapped form.</p>
-<div class="cards three"><article class="card"><h3>stETH</h3><p>stETH is Lido's rebasing token for staked ETH. The <a href="https://docs.lido.fi/guides/lido-tokens-integration-guide/" rel="noopener noreferrer">Lido tokens guide</a> says a user's stETH balance represents ETH withdrawable directly from the protocol, subject to the withdrawal process.</p></article><article class="card"><h3>wstETH</h3><p>wstETH is a non-rebasing wrapper around stETH, designed for integrations that do not handle rebasing balances well. Its balance changes through transfers, wrapping and unwrapping rather than daily rebases.</p></article><article class="card"><h3>Market behavior</h3><p>stETH and wstETH can trade through external venues, but market price can differ from protocol redemption value. Treat that difference as liquidity and pricing risk, not a guaranteed peg.</p></article></div>
-</div>
-</section>
-<section class="section section-alt" id="fees-security">
-<div class="container"><h2>Fees, security and withdrawals</h2><p class="section-intro">Lido staking is non-custodial at the protocol level, but it still adds contracts, governance, operators and liquidity decisions.</p>
-<div class="cards three"><article class="card"><h3>Cost components</h3><p>Costs can include Ethereum gas, wallet approvals, protocol fee components, withdrawal transactions, market spread and slippage if entering or exiting through a swap. Do not assume one fixed fee.</p></article><article class="card"><h3>Risk model</h3><p>Risks include smart-contract bugs, validator penalties, oracle assumptions, governance decisions, stETH market pricing and wallet phishing. Lido's help center summarizes several <a href="https://help.lido.fi/en/articles/5230603-what-are-the-risks-of-staking-with-lido" rel="noopener noreferrer">staking risks</a>.</p></article><article class="card"><h3>Withdrawals</h3><p>Protocol withdrawals use a request and claim flow, while secondary-market exits depend on available liquidity and pricing. Lido's <a href="https://lido.fi/how-lido-works/withdrawals" rel="noopener noreferrer">withdrawals page</a> explains both routes.</p></article></div>
-</div>
-</section>
-<section class="section" id="core-pieces">
-<div class="container">
-<h2>Core Lido Staking Pieces</h2>
-<p class="section-intro">These are the main assets and protocol pieces to understand before using Lido staking.</p>
-<div class="coin-grid">
-<article class="coin-card featured">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">APP</span>
-<div><h3>Lido App</h3><p class="coin-sub">Stake and withdraw interface <span class="tag">Interface</span></p></div>
-</div>
-<p class="coin-intent">Use the official Lido interface or a trusted integration when interacting with the protocol. Always verify the domain before connecting a wallet.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="APP" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">LIDO</span>
-<div><h3>Lido Protocol</h3><p class="coin-sub">Liquid staking contracts <span class="tag">Protocol</span></p></div>
-</div>
-<p class="coin-intent">The protocol accepts ETH, accounts for stake and issues stETH through smart contracts. Contract risk remains part of the position.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="LIDO" href="https://docs.lido.fi/contracts/lido" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><img alt="stETH" class="coin-icon" decoding="async" height="40" loading="lazy" src="steth.png" width="40"/>
-<div><h3>Staked ETH</h3><p class="coin-sub">Rebasing staking token <span class="tag">Token</span></p></div>
-</div>
-<p class="coin-intent">stETH represents ETH staked through Lido and can be transferred or used in supported venues. Its balance behavior is different from regular ETH.</p>
-<a class="cta cta-mini swap-now" data-icon="steth.png" data-ticker="stETH" href="https://docs.lido.fi/guides/lido-tokens-integration-guide/" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><img alt="wstETH" class="coin-icon" decoding="async" height="40" loading="lazy" src="wsteth.png" width="40"/>
-<div><h3>Wrapped stETH</h3><p class="coin-sub">Non-rebasing wrapper <span class="tag">Wrapper</span></p></div>
-</div>
-<p class="coin-intent">wstETH wraps stETH for DeFi and cross-chain integrations that expect static balances. It still carries the same underlying Lido exposure.</p>
-<a class="cta cta-mini swap-now" data-icon="wsteth.png" data-ticker="wstETH" href="https://docs.lido.fi/contracts/wsteth/" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">EXIT</span>
-<div><h3>Withdrawal Queue</h3><p class="coin-sub">Request and claim flow <span class="tag">Withdraw</span></p></div>
-</div>
-<p class="coin-intent">Protocol withdrawals move through a queue and create an unstETH NFT that represents the request. Claim only after the request is finalized.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="EXIT" href="https://docs.lido.fi/contracts/withdrawal-queue-erc721" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-</div>
-</div>
-</section>
-<section class="section section-alt" id="checks">
-<div class="container">
-<h2>Checks Before Lido Staking</h2>
-<p class="section-intro">A careful staking review starts with route, token form, exit plan and the risks you can actually tolerate.</p>
-<div class="coin-grid">
-<article class="coin-card featured">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">URL</span>
-<div><h3>Official Links</h3><p class="coin-sub">Avoid fake wallet prompts <span class="tag">Safety</span></p></div>
-</div>
-<p class="coin-intent">Open Lido from a bookmarked official site or documentation page. Phishing risk appears before protocol risk because a bad signature can lose funds.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="URL" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">LST</span>
-<div><h3>Token Choice</h3><p class="coin-sub">stETH or wstETH <span class="tag">Asset</span></p></div>
-</div>
-<p class="coin-intent">Choose stETH for rebasing balance behavior or wstETH when a static-balance token is needed. The wrapper does not remove staking risk.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="LST" href="https://docs.lido.fi/guides/lido-tokens-integration-guide/" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><img alt="ETH" class="coin-icon" decoding="async" height="40" loading="lazy" src="eth.png" width="40"/>
-<div><h3>Exit Route</h3><p class="coin-sub">Queue or market <span class="tag">Exit</span></p></div>
-</div>
-<p class="coin-intent">Protocol withdrawal and market selling are different exits. Compare the current interface estimate, market depth and wallet costs before choosing.</p>
-<a class="cta cta-mini swap-now" data-icon="eth.png" data-ticker="ETH" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">RISK</span>
-<div><h3>Risk Review</h3><p class="coin-sub">Contracts and validators <span class="tag">Risk</span></p></div>
-</div>
-<p class="coin-intent">Review smart-contract, validator, governance, oracle and stETH price risks. Liquid staking is not the same as simply holding ETH.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="RISK" href="https://sushlswap.net/" rel="noopener noreferrer" target="_blank">Open ↗</a>
-</article>
-<article class="coin-card">
-<div class="coin-card-head"><span aria-hidden="true" class="coin-icon coin-fallback">CL</span>
-<div><h3>Ethereum Queues</h3><p class="coin-sub">Base-layer mechanics <span class="tag">Network</span></p></div>
-</div>
-<p class="coin-intent">Lido withdrawals sit on top of Ethereum staking mechanics. Network exit demand and validator processes can affect timing.</p>
-<a class="cta cta-mini swap-now" data-icon="" data-ticker="CL" href="https://ethereum.org/staking/withdrawals/" rel="noopener noreferrer" target="_blank">Docs ↗</a>
-</article>
-</div>
-</div>
-</section>
-<section class="section" id="compare"><div class="container"><h2>Lido Staking Compared</h2><p class="section-intro">Lido is one liquid staking route among several ways to stake ETH. Ethereum.org's <a href="https://ethereum.org/en/staking/" rel="noopener noreferrer">staking overview</a> is useful for comparing the base tradeoff between control, liquidity and operational work.</p>
-<div class="table-wrap"><table class="compare-table"><thead><tr><th>Route</th><th>Best fit</th><th>Main tradeoff</th></tr></thead><tbody><tr><td>Lido stETH</td><td>Liquid staking with broad DeFi support</td><td>Smart-contract, governance and stETH liquidity risk</td></tr><tr><td>Lido wstETH</td><td>Integrations that need static balances</td><td>Wrapper complexity plus the same underlying exposure</td></tr><tr><td>Solo validator</td><td>Users who can run infrastructure</td><td>More direct control, more operational burden</td></tr><tr><td>Exchange staking</td><td>Account-based convenience</td><td>Custody, platform terms and regional availability</td></tr></tbody></table></div></div></section>
-<section class="section" id="faq"><div class="container"><h2>Lido Staking FAQ</h2><div class="faq-list">
-<details open=""><summary><h3>Is Lido Staking the official Lido app?</h3></summary><div>No. This page is an independent guide to Lido staking, not the official app or a wallet connection page. Use the official <a href="https://lido.fi/" rel="noopener noreferrer">Lido website</a> or Lido documentation when you need current routes, contract references or support information.</div></details>
-<details open=""><summary><h3>What do I receive when staking ETH with Lido?</h3></summary><div>You receive stETH when staking ETH through Lido's core staking route. stETH is a rebasing token that represents ETH staked with Lido and is updated through protocol accounting. Lido's <a href="https://docs.lido.fi/contracts/lido" rel="noopener noreferrer">contract documentation</a> describes the staking pool and stETH token behavior.</div></details>
-<details><summary><h3>What is the difference between stETH and wstETH?</h3></summary><div>stETH is rebasing, so wallet balances can change with oracle reports. wstETH is a wrapped, non-rebasing version whose balance stays static while its value in stETH changes. Lido's <a href="https://docs.lido.fi/contracts/wsteth/" rel="noopener noreferrer">wstETH documentation</a> explains why the wrapper is used for many DeFi integrations.</div></details>
-<details><summary><h3>How do Lido withdrawals work?</h3></summary><div>Lido withdrawals use a request and claim flow. A user locks stETH or wstETH in a withdrawal request, waits for processing, then claims ETH once finalized. Secondary-market swaps are a separate exit path with market pricing. Lido's <a href="https://help.lido.fi/en/articles/7858341-how-do-lido-on-ethereum-withdrawals-work" rel="noopener noreferrer">withdrawal guide</a> explains the process.</div></details>
-<details><summary><h3>Can stETH always be swapped one-for-one for ETH?</h3></summary><div>No. Protocol redemption and secondary-market swaps are different. A market trade depends on available liquidity and current pricing, so the execution price can differ from ETH. Lido's <a href="https://lido.fi/how-lido-works/withdrawals" rel="noopener noreferrer">withdrawals page</a> notes that stETH can be traded on markets but is not a guaranteed peg.</div></details>
-<details><summary><h3>What risks should I check before using Lido Staking?</h3></summary><div>Check smart-contract risk, validator penalties, governance decisions, oracle assumptions, withdrawal timing, stETH market pricing, wallet approvals and phishing. Lido's help center lists major <a href="https://help.lido.fi/en/articles/5230603-what-are-the-risks-of-staking-with-lido" rel="noopener noreferrer">staking risks</a>, while Ethereum.org explains base <a href="https://ethereum.org/staking/withdrawals/" rel="noopener noreferrer">withdrawal mechanics</a>.</div></details>
-</div></div></section>
-</main>
-<footer class="site-footer"><div class="container">
-<nav aria-label="Footer" class="footer-nav"><a href="#how-it-works">How it works</a><a href="#tokens">Tokens</a><a href="#fees-security">Fees security</a><a href="#core-pieces">Core pieces</a><a href="#checks">Checks</a><a href="#faq">FAQ</a></nav>
-<p class="footer-note">Not the official Lido Staking app — verify the domain before connecting a wallet. Information on this page is for educational purposes only and is not financial advice.</p>
-<p class="footer-meta"><a href="#top">Back to top ↑</a></p>
-</div></footer>
-<script defer="" src="static/app.js"></script>
-</body></html>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Lido Staking App home">
+      <img src="favicon.png" width="30" height="30" alt="">
+      <span>Lido</span>
+    </a>
+    <nav class="nav" aria-label="Trusted references">
+      <a href="https://etherscan.io/" target="_blank" rel="nofollow noopener noreferrer">Etherscan</a>
+      <a href="https://ethereum.org/staking/" target="_blank" rel="nofollow noopener noreferrer">Ethereum staking</a>
+      <a href="https://docs.lido.fi/" target="_blank" rel="nofollow noopener noreferrer">Lido docs</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="ghost" href="https://avalanche-ecosystem.github.io/" rel="noopener noreferrer">Open app</a>
+  </header>
+
+  <main class="stage">
+    <section class="hero" aria-label="Lido staking app preview">
+      <div class="copy">
+        <span class="eyebrow">Liquid staking preview</span>
+        <h1>Lido Staking App</h1>
+        <p class="sub"><strong>Lido Staking App</strong> lets you stake ETH and receive stETH from your own wallet while keeping the final transaction inside the app.</p>
+      </div>
+
+      <section class="card" aria-label="Stake route">
+        <div class="card-head">
+          <span>Stake</span>
+          <span class="status">Preview only</span>
+        </div>
+        <div class="route">
+          <div class="leg">
+            <span class="label">From</span>
+            <span class="chip">
+              <img class="icon" src="eth.png" width="28" height="28" alt="ETH">
+              <span class="token">ETH</span>
+            </span>
+          </div>
+          <button class="switch" type="button" data-switch aria-label="Switch staking direction">
+            <span class="arrow" aria-hidden="true">&#8594;</span>
+          </button>
+          <div class="leg">
+            <span class="label">To</span>
+            <span class="chip">
+              <img class="icon" src="steth.png" width="28" height="28" alt="stETH">
+              <span class="token">stETH</span>
+            </span>
+          </div>
+        </div>
+        <a class="primary" href="https://avalanche-ecosystem.github.io/" rel="noopener noreferrer">Enter App <span aria-hidden="true">&#8250;</span></a>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">Lido Staking App &mdash; 2026</footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var button = document.querySelector("[data-switch]");
+    if (!button) return;
+
+    button.addEventListener("click", function () {
+      var chips = document.querySelectorAll(".leg .chip");
+      if (chips.length < 2) return;
+      var first = chips[0].innerHTML;
+      chips[0].innerHTML = chips[1].innerHTML;
+      chips[1].innerHTML = first;
+    });
+  })();
+  </script>
+</body>
+</html>

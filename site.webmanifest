@@ -1,22 +1,18 @@
 {
-  "name": "Lido Staking",
-  "short_name": "Lido Staking",
+  "name": "Lido Staking App",
+  "short_name": "Lido",
+  "description": "Lido Staking App lets you stake ETH and receive stETH from your own wallet while keeping the final transaction inside the app.",
+  "start_url": "https://lido-staking-app.github.io/",
+  "scope": "https://lido-staking-app.github.io/",
+  "display": "standalone",
+  "background_color": "#F7FAFD",
+  "theme_color": "#00A3FF",
   "icons": [
     {
-      "src": "static/icon-192.png",
-      "sizes": "192x192",
+      "src": "favicon.png",
+      "sizes": "any",
       "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "static/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     }
-  ],
-  "theme_color": "#080C0F",
-  "background_color": "#080C0F",
-  "display": "standalone",
-  "start_url": "./"
+  ]
 }
