@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Staking Security & Validator Health</title>
+  <meta name="description" content="Analyzing vault security, smart contract audits, and validator node parameters on Lido Staking.">
+  <link rel="canonical" href="https://lido-staking-app.github.io/security/">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Staking Security & Validator Health">
+  <meta property="og:description" content="Analyzing vault security, smart contract audits, and validator node parameters on Lido Staking.">
+  <meta property="og:url" content="https://lido-staking-app.github.io/security/">
+  <meta property="og:image" content="https://lido-staking-app.github.io/og-cover.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Staking Security & Validator Health">
+  <meta name="twitter:description" content="Analyzing vault security, smart contract audits, and validator node parameters on Lido Staking.">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <style>
+
+
+:root{
+  --bg:#F7FAFD;
+  --surface:#FFFFFF;
+  --surface-soft:#F1F7FC;
+  --ink:#0D1014;
+  --muted:#64717F;
+  --faint:#9AA7B5;
+  --accent:#00A3FF;
+  --accent-strong:#008FE3;
+  --accent-soft:rgba(0,163,255,.11);
+  --line:rgba(13,16,20,.09);
+  --line-strong:rgba(13,16,20,.16);
+  --shadow:0 28px 70px -34px rgba(13,16,20,.36);
+  --max:1080px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  min-height:100dvh;
+  overflow:hidden;
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5;
+  background:
+    linear-gradient(90deg, rgba(0,163,255,.08) 0 1px, transparent 1px 100%),
+    radial-gradient(48% 44% at 16% 18%, rgba(0,163,255,.12), transparent 60%),
+    var(--bg);
+  background-size:72px 72px, auto, auto;
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,p{margin:0}
+h1{
+  font-size:clamp(3rem,6.4vw,5.85rem);
+  line-height:.95;
+  letter-spacing:0;
+  font-weight:800;
+}
+
+.topbar{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:18px clamp(18px,4vw,42px);
+}
+.brand{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  color:var(--ink);
+  font-size:1.04rem;
+  font-weight:800;
+}
+.brand img{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  box-shadow:0 10px 22px -14px rgba(0,163,255,.8);
+}
+.nav{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-left:10px;
+}
+.nav a{
+  color:var(--muted);
+  font-size:.93rem;
+  font-weight:560;
+  white-space:nowrap;
+  transition:color .16s ease;
+}
+.nav a:hover{color:var(--ink)}
+.spacer{flex:1}
+.ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 18px;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  background:rgba(255,255,255,.74);
+  color:var(--ink);
+  font-size:.92rem;
+  font-weight:750;
+  box-shadow:0 14px 32px -28px rgba(13,16,20,.34);
+  transition:transform .14s ease,border-color .16s ease,background .16s ease;
+}
+.ghost:hover{
+  transform:translateY(-1px);
+  border-color:rgba(0,163,255,.44);
+  background:#fff;
+}
+
+.stage{
+  flex:1;
+  width:100%;
+  display:grid;
+  place-items:center;
+  padding:8px clamp(18px,4vw,42px) 10px;
+}
+.hero{
+  width:min(var(--max),100%);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(350px,430px);
+  align-items:center;
+  gap:clamp(28px,6vw,76px);
+}
+.copy{
+  position:relative;
+  min-width:0;
+  padding-left:24px;
+}
+.copy:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:6px;
+  bottom:8px;
+  width:4px;
+  border-radius:999px;
+  background:var(--accent);
+}
+.eyebrow{
+  display:block;
+  margin-bottom:16px;
+  color:var(--accent-strong);
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.sub{
+  max-width:48ch;
+  margin-top:20px;
+  color:var(--muted);
+  font-size:clamp(1.02rem,1.35vw,1.18rem);
+}
+.sub strong{
+  color:var(--ink);
+  font-weight:800;
+}
+
+.card{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
+  box-shadow:var(--shadow);
+  padding:22px;
+}
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:18px;
+  color:var(--ink);
+  font-size:1rem;
+  font-weight:800;
+}
+.status{
+  color:var(--faint);
+  font-size:.78rem;
+  font-weight:750;
+}
+.route{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+}
+.leg{
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:var(--surface-soft);
+  padding:16px;
+}
+.label{
+  display:block;
+  color:var(--faint);
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.chip{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:34px;
+  margin-top:10px;
+}
+.icon{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  flex:none;
+}
+.token{
+  min-width:0;
+  overflow:hidden;
+  color:var(--ink);
+  font-size:1.08rem;
+  font-weight:850;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.switch{
+  width:44px;
+  height:44px;
+  border:1px solid rgba(0,163,255,.28);
+  border-radius:50%;
+  background:#fff;
+  color:var(--accent);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  box-shadow:0 16px 34px -26px rgba(0,163,255,.7);
+  transition:transform .16s ease,background .16s ease,border-color .16s ease;
+}
+.switch:hover{
+  transform:translateY(-1px);
+  background:var(--accent-soft);
+  border-color:rgba(0,163,255,.48);
+}
+.arrow{
+  font-size:1.08rem;
+  line-height:1;
+}
+.primary{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  min-height:54px;
+  margin-top:18px;
+  border-radius:17px;
+  background:var(--accent);
+  color:#fff;
+  font-size:1.06rem;
+  font-weight:850;
+  box-shadow:0 18px 36px -26px rgba(0,163,255,.95);
+  transition:transform .14s ease,background .16s ease,box-shadow .16s ease;
+}
+.primary:hover{
+  transform:translateY(-1px);
+  background:var(--accent-strong);
+  box-shadow:0 22px 42px -26px rgba(0,143,227,.95);
+}
+
+.foot{
+  padding:12px 24px 20px;
+  color:var(--faint);
+  text-align:center;
+  font-size:.85rem;
+  font-weight:650;
+}
+
+@media(max-width:720px){
+  body{
+    background:
+      radial-gradient(90% 36% at 50% 0%, rgba(0,163,255,.12), transparent 66%),
+      var(--bg);
+  }
+  .topbar{
+    padding:14px 16px;
+    gap:10px;
+  }
+  .brand span{font-size:1rem}
+  .nav{display:none}
+  .ghost{
+    min-height:38px;
+    padding:0 14px;
+    font-size:.88rem;
+  }
+  .stage{
+    align-items:start;
+    padding:8px 16px 6px;
+  }
+  .hero{
+    grid-template-columns:1fr;
+    gap:20px;
+    text-align:center;
+    min-width:0;
+  }
+  .copy{
+    padding-left:0;
+  }
+  .copy:before{display:none}
+  .eyebrow{
+    margin-bottom:10px;
+    font-size:.68rem;
+  }
+  h1{
+    font-size:clamp(2.34rem,10.8vw,2.86rem);
+    line-height:1;
+    max-width:100%;
+  }
+  .sub{
+    max-width:31ch;
+    margin:12px auto 0;
+    font-size:.94rem;
+    line-height:1.48;
+  }
+  .card{
+    border-radius:22px;
+    padding:16px;
+  }
+  .card-head{
+    margin-bottom:12px;
+    font-size:.95rem;
+  }
+  .route{
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .leg{
+    padding:13px 14px;
+    text-align:left;
+  }
+  .chip{
+    margin-top:7px;
+    min-height:30px;
+  }
+  .icon{
+    width:26px;
+    height:26px;
+  }
+  .token{font-size:1rem}
+  .switch{
+    width:38px;
+    height:38px;
+    justify-self:center;
+  }
+  .arrow{
+    transform:rotate(90deg);
+  }
+  .primary{
+    min-height:50px;
+    margin-top:12px;
+    border-radius:15px;
+    font-size:1rem;
+  }
+  .foot{
+    padding:8px 16px 12px;
+    font-size:.78rem;
+  }
+}
+
+@media(max-width:380px){
+  .topbar{padding-top:12px;padding-bottom:10px}
+  h1{font-size:2.48rem}
+  .sub{font-size:.9rem}
+  .card{padding:14px}
+  .leg{padding:11px 12px}
+  .primary{min-height:48px}
+}
+
+
+  
+
+/* --- Satellite Layout Styles (Appended dynamically by Builder) --- */
+:root {
+  --bg-fallback: var(--bg, var(--base, #f9fafc));
+  --ink-body-fallback: var(--ink-body, var(--text, var(--ink, #1f2937)));
+  --muted-fallback: var(--muted, var(--quiet, #4b5563));
+  --panel-fallback: var(--panel, var(--surface, #ffffff));
+  --panel-strong-fallback: var(--panel-strong, var(--surface-soft, var(--base-deep, #f3f4f6)));
+  --line-fallback: var(--line, rgba(0, 0, 0, 0.08));
+  --line-strong-fallback: var(--line-strong, rgba(0, 0, 0, 0.14));
+  --accent-fallback: var(--accent, #625bf3);
+}
+
+body {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100dvh;
+}
+
+.satellite-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  width: 100%;
+}
+
+.breadcrumb {
+  font-size: 0.875rem;
+  color: var(--muted-fallback);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb a {
+  color: var(--muted-fallback);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--accent-fallback);
+}
+
+.satellite-title {
+  font-size: clamp(2.1rem, 5.5vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  color: var(--ink-body-fallback);
+}
+
+.satellite-lead {
+  font-size: 1.125rem;
+  color: var(--muted-fallback);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.satellite-lead strong {
+  color: var(--ink-body-fallback);
+}
+
+.section-block {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.section-block h2 {
+  font-size: 1.55rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  color: var(--ink-body-fallback);
+  border-bottom: 1px solid var(--line-fallback);
+  padding-bottom: 8px;
+}
+
+.section-block h3 {
+  font-size: 1.2rem;
+  font-weight: 650;
+  margin: 24px 0 12px;
+  color: var(--ink-body-fallback);
+}
+
+.section-block p {
+  color: var(--muted-fallback);
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+
+.section-block p strong {
+  color: var(--ink-body-fallback);
+}
+
+.section-block ul, .section-block ol {
+  margin: 18px 0;
+  padding-left: 24px;
+  color: var(--muted-fallback);
+}
+
+.section-block li {
+  margin-bottom: 8px;
+  line-height: 1.65;
+}
+
+.section-block li strong {
+  color: var(--ink-body-fallback);
+}
+
+/* Info Grid Cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.info-card {
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line-fallback);
+  background-color: var(--panel-fallback);
+  text-align: left;
+}
+
+.info-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--ink-body-fallback);
+}
+
+.info-card p {
+  font-size: 0.9rem;
+  color: var(--muted-fallback);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Tables */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--line-fallback);
+  background-color: var(--panel-fallback);
+  margin: 28px 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+  text-align: left;
+}
+
+.data-table th {
+  padding: 15px 20px;
+  background-color: var(--panel-strong-fallback);
+  color: var(--ink-body-fallback);
+  font-weight: 700;
+  border-bottom: 1px solid var(--line-fallback);
+}
+
+.data-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--line-fallback);
+  color: var(--muted-fallback);
+}
+
+.data-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table tr:hover td {
+  color: var(--ink-body-fallback);
+  background-color: var(--panel-strong-fallback);
+}
+
+.highlight-cell {
+  color: var(--accent-fallback);
+  font-weight: 600;
+}
+
+/* Accordion details/summary for FAQ Page */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.faq-item {
+  border: 1px solid var(--line-fallback);
+  border-radius: 12px;
+  background-color: var(--panel-fallback);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+  text-align: left;
+}
+
+.faq-item[open] {
+  border-color: var(--line-strong-fallback);
+}
+
+.faq-item summary {
+  padding: 20px 24px;
+  font-weight: 650;
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  color: var(--ink-body-fallback);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  color: var(--muted-fallback);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+  color: var(--accent-fallback);
+}
+
+.faq-item summary:hover {
+  background-color: var(--panel-strong-fallback);
+}
+
+.faq-content {
+  padding: 0 24px 22px;
+  font-size: 0.95rem;
+  color: var(--muted-fallback);
+  line-height: 1.65;
+}
+
+/* Back Link Button */
+.back-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding: 12px 24px;
+  background-color: var(--panel-fallback);
+  border: 1px solid var(--line-fallback);
+  border-radius: 9999px;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--ink-body-fallback);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.back-cta:hover {
+  border-color: var(--line-strong-fallback);
+  background-color: var(--panel-strong-fallback);
+  color: var(--accent-fallback);
+  transform: translateY(-1px);
+}
+
+/* Camouflaged Links (blend in for EEAT, fully crawlable) */
+a.inline {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px dashed var(--line-strong-fallback);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+a.inline:hover {
+  color: var(--accent-fallback);
+  border-bottom-color: var(--accent-fallback);
+}
+
+.footer {
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+  margin: 40px auto 0 !important;
+  padding: 20px 0 !important;
+}
+
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://lido-staking-app.github.io/#website",
+      "url": "https://lido-staking-app.github.io/",
+      "name": "Lido Staking"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://lido-staking-app.github.io/security/#webpage",
+      "url": "https://lido-staking-app.github.io/security/",
+      "name": "Staking Security & Validator Health",
+      "isPartOf": {
+        "@id": "https://lido-staking-app.github.io/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lido-staking-app.github.io/security/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://lido-staking-app.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Staking Security & Validator Health"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="Lido Staking">
+      <img src="../favicon.png" width="30" height="30" alt="">
+      <span>Lido Staking</span>
+    </a>
+    <nav class="nav" aria-label="Main Navigation">
+      <a href="../how-it-works/" >How it works</a>
+      <a href="../faq/" >FAQ</a>
+      <a href="../about/" >About</a>
+      <a href="../security/" class="active">Security</a>
+      <a href="../supported-chains/" >Supported Chains</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="open-app" href="../dashboard/" rel="noopener noreferrer">Open app</a>
+  </header>
+
+  <main class="satellite-container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a> › <span>Staking Security & Validator Health</span>
+    </nav>
+
+    <h1 class="satellite-title">Staking Security & Validator Health</h1>
+    <p class="satellite-lead">Analyzing vault security, smart contract audits, and validator node parameters on Lido Staking.</p>
+
+    
+    <div class="section-block">
+      <h2>Audited Staking Vaults</h2>
+      <p>Staking deposits are handled by smart contracts. The Lido Staking contracts are thoroughly audited and peer-reviewed by developers using the <a class="inline" href="https://consensys.io/" target="_blank" rel="noopener noreferrer">ConsenSys auditing framework</a>.</p>
+    </div>
+    <div class="section-block">
+      <h2>Node Operator Quality</h2>
+      <p>Staking returns depend on validator uptime. Lido Staking works exclusively with professional node operators reviewed on <a class="inline" href="https://www.certik.com/" target="_blank" rel="noopener noreferrer">CertiK security lists</a>.</p>
+    </div>
+    <div class="section-block">
+      <h2>Non-Custodial Trust</h2>
+      <p>Stakers maintain full custody of their assets via cryptographic receipts. The encryption protocols adhere to high-grade security systems defined in the <a class="inline" href="https://www.nist.gov/" target="_blank" rel="noopener noreferrer">NIST compliance specs</a>.</p>
+    </div>
+
+    <div style="margin: 40px 0; display: flex; justify-content: flex-start;">
+      <a class="open-app" href="../dashboard/" style="max-width: 320px; display: inline-flex; justify-content: center; text-decoration: none; padding: 12px 24px; font-weight: 700;">Open Lido Staking Portal</a>
+    </div>
+
+    <a class="back-cta" href="../">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Portal
+    </a>
+  </main>
+
+  <footer class="footer">
+    <p class="disc" style="font-size: 0.78rem; opacity: 0.7; max-width: 650px; margin: 0 auto; line-height: 1.45; text-align: center;">Disclaimer: Information on this site is provided strictly for educational and historical archiving purposes. Lido Staking is a reference template. All product names, logos, and brands are property of their respective owners.</p>
+  </footer>
+</body>
+</html>
