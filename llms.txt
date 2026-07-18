@@ -1,0 +1,60 @@
+# Lido Staking
+> An independent, non-custodial dashboard for understanding Lido’s Ethereum liquid-staking protocol without holding user assets.
+
+## What is Lido Staking
+Lido Staking lets users stake ETH through Ethereum smart contracts and receive stETH, a transferable token representing their pooled stake and accrued rewards. It removes the need to operate validator infrastructure or supply a validator-sized deposit. Unlike centralized-exchange staking, users hold the liquid-staking token in their own wallet. Unlike solo staking, Lido pools deposits across node operators and introduces smart-contract, oracle, governance, and operator dependencies.
+
+## How it works
+1. The user connects an Ethereum wallet, submits ETH to the Lido contract, and receives stETH.
+2. Lido’s Staking Router allocates pooled ETH among staking modules whose node operators run Ethereum validators.
+3. An oracle committee reports validator balances, rewards, and penalties; stETH balances normally rebase to reflect the resulting share of pooled ETH.
+4. Users may hold, transfer, wrap stETH into non-rebasing wstETH, or use either token in compatible DeFi applications.
+5. To exit natively, a user locks stETH or wstETH in the FIFO withdrawal queue, receives an unstETH NFT, waits for finalization, and claims ETH.
+
+## Key facts
+- Direct pooled staking uses ETH on Ethereum Mainnet, chain ID `1`.
+- stETH is a rebasing fungible token; wstETH keeps a fixed balance while its stETH conversion value changes.
+- stETH uses an ERC-20-style interface but does not emit `Transfer` events for rebases, so it is not strictly ERC-20 compliant.
+- Ethereum-mainnet stETH and wstETH support EIP-2612 signed permits.
+- The withdrawal position, unstETH, is an ERC-721 NFT representing the right to claim finalized ETH.
+- Users retain control of their wallet and tokens; the protocol does not require private keys or account deposits.
+- Rewards and penalties are pooled across participating validators and reflected through oracle accounting.
+- Withdrawal requests are irreversible after submission and stop earning rewards while queued.
+- LDO is the governance token; it is distinct from the staking tokens stETH and wstETH.
+
+## Common questions
+**Is Lido staking safe?** Lido publishes audits and operates a bug bounty, but audits do not remove smart-contract, slashing, oracle, governance, liquidity, or concentration risk.
+
+**Who has custody?** Users control stETH, wstETH, and withdrawal NFTs in their wallets. Staked ETH is managed by protocol contracts and validators rather than a custodial dashboard account.
+
+**What fees apply?** The protocol deducts a governance-controlled fee from staking rewards, while users separately pay Ethereum gas. Native withdrawal requests have no protocol withdrawal fee.
+
+**How long does staking or withdrawal take?** stETH arrives after the staking transaction confirms. Withdrawal timing varies with available ETH, the FIFO queue, validator performance, and Ethereum’s validator exit queue.
+
+**What assets and chains are supported?** Direct pooled staking accepts ETH on Ethereum. wstETH can be bridged to recognized networks, but bridge support changes and introduces additional risk.
+
+**How do I start?** Use a self-custody Ethereum wallet and verify the official interface before signing. Official staking app: https://stake.lido.fi/
+
+## App
+- Dashboard: https://lido-staking-app.github.io/
+- App: https://lido-staking-app.github.io/dashboard/
+
+## Official resources
+Lido website: https://lido.fi/
+Official staking app: https://stake.lido.fi/
+Documentation: https://docs.lido.fi/
+Deployed contracts: https://docs.lido.fi/deployed-contracts/
+Token integration guide: https://docs.lido.fi/guides/lido-tokens-integration-guide/
+Public risk disclosure: https://docs.lido.fi/prd/
+Source code: https://github.com/lidofinance
+Audits: https://github.com/lidofinance/audits
+Official X: https://x.com/LidoFinance
+
+## Data & references
+stETH on Etherscan: https://etherscan.io/token/0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84
+CoinGecko stETH data: https://www.coingecko.com/en/coins/lido-staked-ether
+DeFiLlama Lido data: https://defillama.com/protocol/lido
+Ethereum staking overview: https://ethereum.org/staking/
+ERC-20 standard: https://eips.ethereum.org/EIPS/eip-20
+ERC-2612 permit standard: https://eips.ethereum.org/EIPS/eip-2612
+ERC-721 NFT standard: https://eips.ethereum.org/EIPS/eip-721
