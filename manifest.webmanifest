@@ -1,0 +1,19 @@
+{
+  "name": "Lido Staking",
+  "short_name": "Lido Staking",
+  "description": "Lido Staking lets you stake ETH without running a validator and receive liquid stETH. How it works, rewards, withdrawals, risks, and how to start.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "en",
+  "background_color": "#f5f6f8",
+  "theme_color": "#f5f6f8",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
